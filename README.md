@@ -12,6 +12,12 @@ zplug "newaaa41/zsh-abbrev-alias"
 
 Alias settings are written after `zplug load`.
 
+### Using [zpluging](https://github.com/zdharma/zplugin)
+
+```zsh
+zplugin light newaaa41/zsh-abbrev-alias
+```
+
 ## For Example
 
 ```zsh
