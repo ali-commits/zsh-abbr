@@ -4,7 +4,7 @@ typeset -g _ABBREV_ALIAS_VERSION='0.2.0'
 
 typeset -Ag _abbrev_aliases
 
-__abbrev_alias::magic_abbrev_expand() {
+__abbr::magic_abbrev_expand() {
   local MATCH
   LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
   local abbr=${_abbrev_aliases[$MATCH]:-  $MATCH}
@@ -21,20 +21,20 @@ __abbrev_alias::magic_abbrev_expand() {
   zle self-insert
 }
 
-__abbrev_alias::no_magic_abbrev_expand() {
+__abbr::no_magic_abbrev_expand() {
   LBUFFER+=' '
 }
 
-__abbrev_alias::init() {
+__abbr::init() {
   setopt extended_glob
-  zle -N __abbrev_alias::magic_abbrev_expand
-  zle -N __abbrev_alias::no_magic_abbrev_expand
+  zle -N __abbr::magic_abbrev_expand
+  zle -N __abbr::no_magic_abbrev_expand
   bindkey -v
-  bindkey " "   __abbrev_alias::magic_abbrev_expand
-  bindkey "^x " __abbrev_alias::no_magic_abbrev_expand
+  bindkey " "   __abbr::magic_abbrev_expand
+  bindkey "^x " __abbr::no_magic_abbrev_expand
 }
 
-__abbrev_alias::list() {
+__abbr::list() {
   local kind_filter=$1
   local key value kind
   for key in ${(k)_abbrev_aliases}; do
@@ -47,27 +47,27 @@ __abbrev_alias::list() {
   done
 }
 
-__abbrev_alias::version() {
-  echo "abbrev-alias ${_ABBREV_ALIAS_VERSION}"
+__abbr::version() {
+  echo "abbr ${_ABBREV_ALIAS_VERSION}"
 }
 
-__abbrev_alias::help() {
-  __abbrev_alias::version
-  echo "usage: abbrev-alias [OPTIONS] {name=value ...}"
-  echo "       abbrev-alias -u {name ...}"
-  echo "       abbrev-alias --init"
+__abbr::help() {
+  __abbr::version
+  echo "usage: abbr [OPTIONS] {name=value ...}"
+  echo "       abbr -u {name ...}"
+  echo "       abbr --init"
   echo
   echo "options:"
   echo "  -c, --command   register alias as 'alias name=value'"
   echo "  -g, --global    register alias as 'alias -g name=value'"
   echo "  -e, --eval      evaluates subshells on expansion. "
   echo "  -u, --unset     unregister alias"
-  echo "  -i, --init      initialize abbrev-alias. execute with .zshrc"
+  echo "  -i, --init      initialize abbr. execute with .zshrc"
   echo "  -h, --help      show this help"
   echo "  -v, --version   show version"
 }
 
-__abbrev_alias::unregist() {
+__abbr::unregist() {
   local key=$1
   if [[ -n "${_abbrev_aliases[$key]}" ]]; then
     unalias $key
@@ -77,11 +77,11 @@ __abbrev_alias::unregist() {
   fi
 }
 
-__abbrev_alias::regist() {
+__abbr::regist() {
   local kind=$1 is_eval=$2 key=${3%%=*} value=${3#*=}
   if [[ "$kind" == "f" ]]; then
     echo "WARN: -f option is deprecated. Use -g -e options." 1>&2
-    echo "      ex) abbrev-alias -g -e $key='\$($value)'" 1>&2
+    echo "      ex) abbr -g -e $key='\$($value)'" 1>&2
     value="\$($value)"
     is_eval=1
     kind=g
@@ -99,9 +99,9 @@ local is_eval=0
 local -a args
 while [ $# -gt 0 ]; do
   case "$1" in
-    -i|--init)      __abbrev_alias::init; return;;
-    -h|--help)      __abbrev_alias::help; return;;
-    -v|--version)   __abbrev_alias::version; return;;
+    -i|--init)      __abbr::init; return;;
+    -h|--help)      __abbr::help; return;;
+    -v|--version)   __abbr::version; return;;
     -u|--unset)     kind=u;;
     -c|--command)   kind=c;;
     -g|--global)    kind=g;;
@@ -114,15 +114,15 @@ done
 
 local value
 if [[ $#args == 0 ]]; then
-  __abbrev_alias::list ${kind:-a}
+  __abbr::list ${kind:-a}
   return
 fi
 if [[ "$kind" == "u" ]]; then
   for value in ${args[@]}; do
-    __abbrev_alias::unregist $value
+    __abbr::unregist $value
   done
 else
   for value in ${args[@]}; do
-    __abbrev_alias::regist ${kind:-c} $is_eval $value
+    __abbr::regist ${kind:-c} $is_eval $value
   done
 fi
