@@ -39,7 +39,7 @@ Show `abbr --help`.
 
 ```zsh
 $ abbr --help
-abbr 0.2.0
+abbr 0.3.0
 usage: abbr [OPTIONS] {name=value ...}
        abbr -u {name ...}
        abbr --init
