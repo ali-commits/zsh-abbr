@@ -1,7 +1,5 @@
 # zsh-abbrev-alias
-This zsh plugin provides functionality similar to Vim's abbreviation expansion.
-
-This plugin consulted http://zshwiki.org/home/examples/zleiab .
+This zsh plugin provides functionality similar to fish's and VIM's abbreviation expansion.
 
 ## Installation
 ### Using [zplug](https://github.com/b4b4r07/zplug)
