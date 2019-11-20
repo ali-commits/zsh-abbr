@@ -1,21 +1,25 @@
-# zsh-abbrev-alias
-This zsh plugin provides functionality similar to Vim's abbreviation expansion.
-
-This plugin consulted http://zshwiki.org/home/examples/zleiab .
+# zsh-abbr
+This zsh plugin provides functionality similar to [fish's](https://fishshell.com/docs/current/commands.html) and [VIM's](https://vim.fandom.com/wiki/Using_abbreviations) abbreviation expansion.
 
 ## Installation
 ### Using [zplug](https://github.com/b4b4r07/zplug)
 
 ```zsh
-zplug "momo-lab/zsh-abbrev-alias"
+zplug "newaaa41/zsh-abbr"
 ```
 
 Alias settings are written after `zplug load`.
 
+### Using [zpluging](https://github.com/zdharma/zplugin)
+
+```zsh
+zplugin light newaaa41/zsh-abbr
+```
+
 ## For Example
 
 ```zsh
-$ abbrev-alias -g G="| grep"
+$ abbr -g G="| grep"
 $ ps aux G<push space key>
 ->
 $ ps aux | grep 
@@ -24,21 +28,21 @@ $ ps aux | grep
 ```zsh
 $ git branch
 * master
-$ abbrev-alias -g -e B='$(git symbolic-ref --short HEAD 2> /dev/null)'
+$ abbr -g -e B='$(git symbolic-ref --short HEAD 2> /dev/null)'
 $ git push origin B<push space key>
 ->
 $ git push origin master 
 ```
 
 ## Help
-Show `abbrev-alias --help`.
+Show `abbr --help`.
 
 ```zsh
-$ abbrev-alias --help
-abbrev-alias 0.2.0
-usage: abbrev-alias [OPTIONS] {name=value ...}
-       abbrev-alias -u {name ...}
-       abbrev-alias --init
+$ abbr --help
+abbr 0.2.0
+usage: abbr [OPTIONS] {name=value ...}
+       abbr -u {name ...}
+       abbr --init
 
 options:
   -c, --command   register as 'alias name=value'
