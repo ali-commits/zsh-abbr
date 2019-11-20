@@ -1,11 +1,11 @@
-# zsh-abbrev-alias
-This zsh plugin provides functionality similar to fish's and VIM's abbreviation expansion.
+# zsh-abbr
+This zsh plugin provides functionality similar to [fish's](https://fishshell.com/docs/current/commands.html) and [VIM's](https://vim.fandom.com/wiki/Using_abbreviations) abbreviation expansion.
 
 ## Installation
 ### Using [zplug](https://github.com/b4b4r07/zplug)
 
 ```zsh
-zplug "newaaa41/zsh-abbrev-alias"
+zplug "newaaa41/zsh-abbr"
 ```
 
 Alias settings are written after `zplug load`.
@@ -13,7 +13,7 @@ Alias settings are written after `zplug load`.
 ### Using [zpluging](https://github.com/zdharma/zplugin)
 
 ```zsh
-zplugin light newaaa41/zsh-abbrev-alias
+zplugin light newaaa41/zsh-abbr
 ```
 
 ## For Example
