@@ -15,7 +15,8 @@ Alias settings are written after `zplug load`.
 ```zsh
 zplugin light newaaa41/zsh-abbr
 ```
-
+## Demo
+![demo](https://github.com/newaaa41/zsh-abbr/blob/master/demo.gif?raw=true)
 ## For Example
 
 ```zsh
