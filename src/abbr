@@ -1,13 +1,13 @@
 #!/usr/bin/env zsh
 
-typeset -g _ABBREV_ALIAS_VERSION='0.4.0'
+typeset -g _ABBR_VERSION='0.4.0'
 
-typeset -Ag _abbrev_aliases
+typeset -Ag _abbr
 
 __abbr::magic_abbrev_expand() {
   local MATCH
   LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
-  local abbr=${_abbrev_aliases[$MATCH]:-  $MATCH}
+  local abbr=${_abbr[$MATCH]:-  $MATCH}
   local kind=${abbr[1,1]}
   local is_eval=${abbr[2,2]}
   local newbuffer=${abbr[3,-1]}
@@ -20,6 +20,7 @@ __abbr::magic_abbrev_expand() {
   LBUFFER+=$newbuffer
 
   zle self-insert # add space after the expantion
+  # LBUFFER=$LBUFFER[1,-2]
 }
 
 __abbr::no_magic_abbrev_expand() {
@@ -29,7 +30,7 @@ __abbr::no_magic_abbrev_expand() {
 __abbr::magic_abbrev_expand_and_return() {
   local MATCH
   LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
-  local abbr=${_abbrev_aliases[$MATCH]:-  $MATCH}
+  local abbr=${_abbr[$MATCH]:-  $MATCH}
   local kind=${abbr[1,1]}
   local is_eval=${abbr[2,2]}
   local newbuffer=${abbr[3,-1]}
@@ -60,8 +61,8 @@ __abbr::init() {
 __abbr::list() {
   local kind_filter=$1
   local key value kind
-  for key in ${(k)_abbrev_aliases}; do
-    value=${_abbrev_aliases[$key]}
+  for key in ${(k)_abbr}; do
+    value=${_abbr[$key]}
     kind=${value[1,1]}
     value=${value[3,-1]}
     if [[ $kind_filter == a || $kind_filter == $kind ]]; then
@@ -71,7 +72,7 @@ __abbr::list() {
 }
 
 __abbr::version() {
-  echo "abbr ${_ABBREV_ALIAS_VERSION}"
+  echo "abbr ${_ABBR_VERSION}"
 }
 
 __abbr::help() {
@@ -92,9 +93,9 @@ __abbr::help() {
 
 __abbr::unregist() {
   local key=$1
-  if [[ -n "${_abbrev_aliases[$key]}" ]]; then
+  if [[ -n "${_abbr[$key]}" ]]; then
     unalias $key
-    unset "_abbrev_aliases[$key]"
+    unset "_abbr[$key]"
   else
     echo "no such alias: $key" >&2
   fi
@@ -113,7 +114,7 @@ __abbr::regist() {
     g) alias -g $key="$value";;
     c) alias    $key="$value";;
   esac
-  _abbrev_aliases[$key]="$kind$is_eval$value"
+  _abbr[$key]="$kind$is_eval$value"
 }
 
 # option parse & execute
