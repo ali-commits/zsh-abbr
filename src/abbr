@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-typeset -g _ABBREV_ALIAS_VERSION='0.3.0'
+typeset -g _ABBREV_ALIAS_VERSION='0.4.0'
 
 typeset -Ag _abbrev_aliases
 
@@ -18,20 +18,43 @@ __abbr::magic_abbrev_expand() {
     newbuffer=$(eval "echo \"$newbuffer\"")
   fi
   LBUFFER+=$newbuffer
-  zle self-insert
+
+  # zle self-insert # add space after the expantion
 }
 
 __abbr::no_magic_abbrev_expand() {
   LBUFFER+=' '
 }
 
+__abbr::magic_abbrev_expand_and_return() {
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
+  local abbr=${_abbrev_aliases[$MATCH]:-  $MATCH}
+  local kind=${abbr[1,1]}
+  local is_eval=${abbr[2,2]}
+  local newbuffer=${abbr[3,-1]}
+  if [[ $kind == "c" && $LBUFFER != "" ]]; then
+    newbuffer=$MATCH
+  fi
+  if [[ "$is_eval" == "1" ]]; then
+    newbuffer=$(eval "echo \"$newbuffer\"")
+  fi
+  LBUFFER+=$newbuffer
+  zle accept-line
+
+}
+
 __abbr::init() {
   setopt extended_glob
   zle -N __abbr::magic_abbrev_expand
   zle -N __abbr::no_magic_abbrev_expand
+  zle -N __abbr::magic_abbrev_expand_and_return
+
   bindkey -v
   bindkey " "   __abbr::magic_abbrev_expand
   bindkey "^x " __abbr::no_magic_abbrev_expand
+  bindkey "\r" __abbr::magic_abbrev_expand_and_return
+  
 }
 
 __abbr::list() {
