@@ -19,7 +19,7 @@ __abbr::magic_abbrev_expand() {
   fi
   LBUFFER+=$newbuffer
 
-  # zle self-insert # add space after the expantion
+  zle self-insert # add space after the expantion
 }
 
 __abbr::no_magic_abbrev_expand() {
