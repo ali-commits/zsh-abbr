@@ -1,5 +1,5 @@
 # zsh-abbr
-This zsh plugin provides functionality similar to [fish's](https://fishshell.com/docs/current/commands.html) and [VIM's](https://vim.fandom.com/wiki/Using_abbreviations) abbreviation expansion.
+This zsh plugin provides abbreviation expansion functionality similar to [fish's](https://fishshell.com/docs/current/commands.html) and [VIM's](https://vim.fandom.com/wiki/Using_abbreviations) .
 
 ## Installation
 ### Using [zplug](https://github.com/b4b4r07/zplug)
@@ -10,10 +10,10 @@ zplug "newaaa41/zsh-abbr"
 
 Alias settings are written after `zplug load`.
 
-### Using [zpluging](https://github.com/zdharma/zplugin)
+### Using [zinit](https://github.com/zdharma/zinit)
 
 ```zsh
-zplugin light newaaa41/zsh-abbr
+zinit light newaaa41/zsh-abbr
 ```
 ## Demo
 ![demo](https://github.com/newaaa41/zsh-abbr/blob/master/demo.gif?raw=true)
@@ -40,7 +40,7 @@ Show `abbr --help`.
 
 ```zsh
 $ abbr --help
-abbr 0.3.0
+abbr 0.4.0
 usage: abbr [OPTIONS] {name=value ...}
        abbr -u {name ...}
        abbr --init
