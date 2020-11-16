@@ -5,7 +5,7 @@ This zsh plugin provides abbreviation expansion functionality similar to [fish's
 ### Using [zplug](https://github.com/b4b4r07/zplug)
 
 ```zsh
-zplug "newaaa41/zsh-abbr"
+zplug "ali-commits/zsh-abbr"
 ```
 
 Alias settings are written after `zplug load`.
@@ -13,10 +13,10 @@ Alias settings are written after `zplug load`.
 ### Using [zinit](https://github.com/zdharma/zinit)
 
 ```zsh
-zinit light newaaa41/zsh-abbr
+zinit light ali-commits/zsh-abbr
 ```
 ## Demo
-![demo](https://github.com/newaaa41/zsh-abbr/blob/master/demo.gif?raw=true)
+![demo](https://github.com/ali-commits/zsh-abbr/blob/master/demo.gif?raw=true)
 ## For Example
 
 ```zsh
