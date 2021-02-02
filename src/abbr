@@ -51,7 +51,7 @@ __abbr::init() {
   zle -N __abbr::no_magic_abbrev_expand
   zle -N __abbr::magic_abbrev_expand_and_return
 
-  bindkey -v
+ # bindkey -v
   bindkey " "   __abbr::magic_abbrev_expand
   bindkey "^x " __abbr::no_magic_abbrev_expand
   bindkey "\r" __abbr::magic_abbrev_expand_and_return
