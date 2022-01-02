@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
-typeset -g _ABBR_VERSION='0.4.0'
+typeset -g _ABBR_VERSION='0.4.1'
 
 typeset -Ag _abbr
 
-__abbr::magic_abbrev_expand() {
+__abbr::magic_abbrev_expand_or_space() {
   local MATCH
   LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
   local abbr=${_abbr[$MATCH]:-  $MATCH}
@@ -19,7 +19,10 @@ __abbr::magic_abbrev_expand() {
   fi
   LBUFFER+=$newbuffer
 
-  zle self-insert # add space after the expantion
+  if [[ $newbuffer == $MATCH ]]; then
+    zle self-insert
+  fi
+  # zle self-insert # add space after the expantion
   # LBUFFER=$LBUFFER[1,-2]
 }
 
@@ -47,13 +50,12 @@ __abbr::magic_abbrev_expand_and_return() {
 
 __abbr::init() {
   setopt extended_glob
-  zle -N __abbr::magic_abbrev_expand
+  zle -N __abbr::magic_abbrev_expand_or_space
   zle -N __abbr::no_magic_abbrev_expand
   zle -N __abbr::magic_abbrev_expand_and_return
 
- # bindkey -v
-  bindkey " "   __abbr::magic_abbrev_expand
-  bindkey "^x " __abbr::no_magic_abbrev_expand
+  bindkey " "   __abbr::magic_abbrev_expand_or_space
+  bindkey "^ " __abbr::no_magic_abbrev_expand
   bindkey "\r" __abbr::magic_abbrev_expand_and_return
   
 }
@@ -123,14 +125,15 @@ local is_eval=0
 local -a args
 while [ $# -gt 0 ]; do
   case "$1" in
-    -i|--init)      __abbr::init; return;;
-    -h|--help)      __abbr::help; return;;
-    -v|--version)   __abbr::version; return;;
-    -u|--unset)     kind=u;;
-    -c|--command)   kind=c;;
-    -g|--global)    kind=g;;
-    -f|--function)  kind=f;;
-    -e|--eval)      is_eval=1;;
+    -i| --init)      __abbr::init; return;;
+    -h| --help)      __abbr::help; return;;
+    -v| --version)   __abbr::version; return;;
+    -l| --list)      __abbr::list;;
+    -u| --unset)     kind=u;;
+    -c| --command)   kind=c;;
+    -g| --global)    kind=g;;
+    -f| --function)  kind=f;;
+    -e| --eval)      is_eval=1;;
     *) args=("${args[@]}" $1) ;;
   esac
   shift
