@@ -19,11 +19,7 @@ __abbr::magic_abbrev_expand_or_space() {
   fi
   LBUFFER+=$newbuffer
 
-  if [[ $newbuffer == $MATCH ]]; then
-    zle self-insert
-  fi
-  # zle self-insert # add space after the expantion
-  # LBUFFER=$LBUFFER[1,-2]
+  zle self-insert
 }
 
 __abbr::no_magic_abbrev_expand() {
